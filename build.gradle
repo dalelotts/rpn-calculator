@@ -1,0 +1,24 @@
+group 'com.visa.rpn'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.+'
+}
+
+jar {
+    manifest {
+        attributes(
+                "Implementation-Title": "rpn-calculator",
+                "Implementation-Version": version,
+                "Main-Class": "com.dalelotts.rpn.Main"
+        )
+    }
+}
