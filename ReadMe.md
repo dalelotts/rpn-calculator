@@ -9,26 +9,75 @@ This project was written using Pair Programming & TDD. As a result, all enhancem
 NB: The master branch is the starting point for the training, there is only one test, and it fails. This is by design. 
 Explore the other branches see the different states of the code.
 
+See the [Product Backlog](ProductBacklog.md) for details about which features are needed.
 
-#Environment
+# New to Git?
+See the [Git cheat sheet](https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf) for details.
+
+# PostFix, InFix, Operator & Operand Definitions:
+
+In all computer languages, expressions consist of two types of components: 
+Operands and Operators. 
+
+Operands are the objects that are manipulated and operators are the symbols that represent specific actions. 
+For example, in the expression
+
+```
+5 + 9
+```
+
+9 and 5 are operands and + is an operator. 
+All expressions have at least one operand. 
+
+## Infix:  
+Infix calculators expect two operands separated by an operator:
+
+```
+5 + 9
+```
+
+the result of which = 14.
+
+## Postfix
+In Postfix, or RPN, the operators follow the operands:
+
+```
+5 9 +
+```
+
+the result of which = 14.
+
+For order dependent functions the top operand is Y, the next operand is X:
+
+```
+5 9 -
+```
+
+operator = '-'
+X = '5'
+Y = '9'
+
+POSTFIX(X Y -)  ==  INFIX(X - Y)  ==  INFIX(5 - 9)  ==  -4
+
+# Environment
  * Git 2.6.2 or higher
  * Java 1.8 or higher
  * Gradle 2.8 or higher
  
-#Dependencies
+# Dependencies
  * JMockit 1.20 or higher
  * JUnit 4.12 or higher
 
-#Usage
+# Usage
 
-##Build and Test
+## Build and Test
 This project uses Gradle. To build and test the code run the following command:
 
 ```
 gradle build
 ```
 
-##Run Tests
+## Run Tests
 ```
 gradle test
 java -j
