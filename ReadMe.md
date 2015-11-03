@@ -11,10 +11,10 @@ Explore the other branches see the different states of the code.
 
 See the [Product Backlog](ProductBacklog.md) for details about which features are needed.
 
-# New to Git?
+## New to Git?
 See the [Git cheat sheet](https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf) for details.
 
-# PostFix, InFix, Operator & Operand Definitions:
+## PostFix, InFix, Operator & Operand Definitions:
 
 In all computer languages, expressions consist of two types of components: 
 Operands and Operators. 
@@ -67,33 +67,113 @@ POSTFIX(X Y -)  ==  INFIX(X - Y)  ==  INFIX(5 - 9)  ==  -4
 # Dependencies
  * JMockit 1.20 or higher
  * JUnit 4.12 or higher
+ 
+# Setup
+Nota Bene: Please do not setup this project in a directory with spaces. This project will
+not be tested in directories with white space and, as a result, it is not expected to work. 
+
+##TL;DR
+To get up and running do these four steps.
+
+Install [Java] (https://java.com/en/download/)
+
+Install [Git] (https://git-scm.com/download/)  The portable version is Okay
+
+Clone this repository (avoid directories with spaces)
+```shell
+git clone https://github.com/dalelotts/rpn-calculator.git
+
+cd rpn-calculator
+```
+    
+Check the build (the master branch should have one failing test)
+```
+gradlew build
+```
+
+Read further for instructions on setting up jenkins, etc.
+
+## Install Java
+Download and install [Java] (https://java.com/en/download/)
+
+## Install Git
+[Windows] (https://git-scm.com/download/win)
+[Mac] (https://git-scm.com/download/mac)
+[Linux] (https://git-scm.com/download/linux)
+
+## Clone this repository
+Avoid directories with spaces
+```shell
+git clone https://github.com/dalelotts/rpn-calculator.git
+cd rpn-calculator
+```
+
+## Gradle
+
+This project uses the Gradle wrapper so there is no need to install Gradle (unless you want to).
+
+Run all Gradle commands using the ./gradlew or ./gradlew.bat script in the root directory. 
+These scripts also work well in a CI environment.
+
+## Jenkins
+This project uses the a custom Jenkins wrapper so there is no need to install Jenkins.
+
+```shell
+gradlew jenkins-install
+```
+
+After running setup-environment, you can start Jenkins with the following command:
+
+```shell
+jenkins-cli start
+```
+When you see ```INFO: Jenkins is fully up and running``` you can navigate to ```http://localhost:8080``` 
+to access the Jenkins server.
+
+### Add this project to Jenkins 
+In a separate command window, run the following:
+
+Nota bene: Jenkins must be running before it can be configured.
+
+```shell
+gradlew jenkins-configure
+```
+
+Now visit ```httl://localhost:8080``` and you should see a jenkins instance with a 'rpn-calculator' project.
+
+Run ```jenkins-cli help``` for the list of commands you can run once jenkins is configured. 
+
+### (Optionally) Trigger Jenkins build on git commit
+
+```shell
+gradlew jenkins-git-trigger
+```
 
 # Usage
 
 ## Build and Test
 This project uses Gradle. To build and test the code run the following command:
 
-```
-gradle build
+```shell
+gradlew build
 ```
 
 ## Run Tests
-```
-gradle test
-java -j
+```shell
+gradlew test
 ```
 
 The html report of the test results is ./build/reports/index.html
 
-#Run Jar
+## Run Jar
 To jar and run the calculator run the following commands:
 
-```
-gradle jar
+```shell
+gradlew jar
 java -jar ./build/libs/calculator-1.0-SNAPSHOT.jar 
 ```
 
-## License
+# License
 
 rpn-calculator is released under the MIT license and is copyright 2015 Dale Lotts. Boiled down to smaller chunks, it can be described with the following conditions.
 
