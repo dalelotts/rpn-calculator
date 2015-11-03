@@ -99,7 +99,15 @@ Download and install [Java] (https://java.com/en/download/)
 ## Install Git
 [Windows] (https://git-scm.com/download/win)
 [Mac] (https://git-scm.com/download/mac)
-[Linux] (https://git-scm.com/download/linux)
+[Linux] (https://git-scm.com/download/linux) 
+
+### Configure git to use a proxy server
+If you are working behind a proxy server you will need to configure git with the proxy settings
+
+```shell
+git config -global http.proxy http://proxyuser:proxypassword@proxy.server.come:80
+git config -global https.proxy https://proxyuser:proxypassword@proxy.server.come:443
+```
 
 ## Clone this repository
 Avoid directories with spaces
