@@ -79,17 +79,17 @@ Install [Java] (https://java.com/en/download/)
 
 Install [Git] (https://git-scm.com/download/)  The portable version is Okay
 
-Clone this repository
-    ```
-    cd [some directory that does not contain white spaces]
-    git clone https://github.com/dalelotts/rpn-calculator.git
-    cd rpn-calculator
-    ```
+Clone this repository (avoid directories with spaces)
+```shell
+git clone https://github.com/dalelotts/rpn-calculator.git
+
+cd rpn-calculator
+```
     
 Check the build (the master branch should have one failing test)
-    ```
-    ./gradlew build
-    ```
+```
+gradlew build
+```
 
 Read further for instructions on setting up jenkins, etc.
 
@@ -99,11 +99,19 @@ Download and install [Java] (https://java.com/en/download/)
 ## Install Git
 [Windows] (https://git-scm.com/download/win)
 [Mac] (https://git-scm.com/download/mac)
-[Linux] (https://git-scm.com/download/linux)
+[Linux] (https://git-scm.com/download/linux) 
+
+### Configure git to use a proxy server
+If you are working behind a proxy server you will need to configure git with the proxy settings
+
+```shell
+git config -global http.proxy http://proxyuser:proxypassword@proxy.server.come:80
+git config -global https.proxy https://proxyuser:proxypassword@proxy.server.come:443
+```
 
 ## Clone this repository
-```
-cd [some directory that does not contain white spaces]
+Avoid directories with spaces
+```shell
 git clone https://github.com/dalelotts/rpn-calculator.git
 cd rpn-calculator
 ```
@@ -118,13 +126,13 @@ These scripts also work well in a CI environment.
 ## Jenkins
 This project uses the a custom Jenkins wrapper so there is no need to install Jenkins.
 
-```
+```shell
 gradlew jenkins-install
 ```
 
 After running setup-environment, you can start Jenkins with the following command:
 
-```
+```shell
 jenkins-cli start
 ```
 When you see ```INFO: Jenkins is fully up and running``` you can navigate to ```http://localhost:8080``` 
@@ -135,7 +143,7 @@ In a separate command window, run the following:
 
 Nota bene: Jenkins must be running before it can be configured.
 
-```
+```shell
 gradlew jenkins-configure
 ```
 
@@ -145,7 +153,7 @@ Run ```jenkins-cli help``` for the list of commands you can run once jenkins is 
 
 ### (Optionally) Trigger Jenkins build on git commit
 
-```
+```shell
 gradlew jenkins-git-trigger
 ```
 
@@ -154,12 +162,12 @@ gradlew jenkins-git-trigger
 ## Build and Test
 This project uses Gradle. To build and test the code run the following command:
 
-```
+```shell
 gradlew build
 ```
 
 ## Run Tests
-```
+```shell
 gradlew test
 ```
 
@@ -168,7 +176,7 @@ The html report of the test results is ./build/reports/index.html
 ## Run Jar
 To jar and run the calculator run the following commands:
 
-```
+```shell
 gradlew jar
 java -jar ./build/libs/calculator-1.0-SNAPSHOT.jar 
 ```
