@@ -75,9 +75,9 @@ not be tested in directories with white space and, as a result, it is not expect
 ##TL;DR
 To get up and running do these four steps.
 
-Install [Java] (https://java.com/en/download/)
+Install [Java JDK] (http://www.oracle.com/technetwork/java/javase/downloads/index.html/) 1.8 or higher
 
-Install [Git] (https://git-scm.com/download/)  The portable version is Okay
+Install [Git] (https://git-scm.com/download/) 2.6.2 or higher. The portable version is Okay
 
 Clone this repository (avoid directories with spaces)
 ```shell
@@ -94,7 +94,7 @@ gradlew build
 Read further for instructions on setting up jenkins, etc.
 
 ## Install Java
-Download and install [Java] (https://java.com/en/download/)
+Download and install [Java JDK] (http://www.oracle.com/technetwork/java/javase/downloads/index.html/) 1.8 or higher
 
 ## Install Git
 [Windows] (https://git-scm.com/download/win)
