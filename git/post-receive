@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# curl http://yourserver/git/notifyCommit?url=<URL of the Git repository>[&branches=branch1[,branch2]*][&sha1=<commit ID>]
+
+curl http://localhost:8080/git/notifyCommit?url=file:///Users/dalelotts/dev/visa/calculator&Branches=foo
