@@ -2,8 +2,8 @@
 
 /**
  * This package contains the classes used to produce a Reverse Polish Notation calculator.
- * <p>
- * This code base is used of training purposes only.
+ *
+ * <p>This code base is used of training purposes only.
  *
  * @author Dale "Ducky" Lotts
  * @since 10/27/15.

@@ -107,3 +107,10 @@ com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
 
+
+# Jenkins
+/jenkins/*.jar
+
+#Git
+/portablegit
+PortableGit.exe

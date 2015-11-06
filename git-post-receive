@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Add curl http://yourserver/git/notifyCommit?url=<URL of the Git repository>
+# to [GIT_HOME]/hooks/post-receive
+
+
+# Check for GIT_HOME - error if it does not exist.
+
+SCRIPTPATH=`pwd`
+
+if [ "$1" = "disable" ]
+then
+    # curl http://yourserver/git/notifyCommit?url=<URL of the Git repository>
+    echo "DISABLED post-receive notifications to Jenkins at http://localhost:8080 for changes to file://$SCRIPTPATH"
+else
+    grep -q -F 'include "/configs/projectname.conf"' foo.bar || echo 'include "/configs/projectname.conf"' >> foo.bar
+
+    echo "ENABLED post-receive notifications to Jenkins at http://localhost:8080 for changes to file://$SCRIPTPATH"
+fi
