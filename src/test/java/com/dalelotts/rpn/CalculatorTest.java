@@ -2,7 +2,8 @@ package com.dalelotts.rpn;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.junit.Assert.assertThat;
 
 /**
  * @author Dale "Ducky" Lotts
@@ -11,10 +12,18 @@ import static org.junit.Assert.*;
 
 public class CalculatorTest {
 
-	private Calculator  calculator;
+    private Calculator calculator;
 
-	 @Test
-	  public void runShouldDoTheRightThing () {
-	     fail("Not implemented");
-	  }
+    @Test
+    public void runShouldDoTheRightThing() {
+        // Given
+        calculator = new Calculator();
+
+        // When
+        calculator.run();
+
+        // Then
+        // How can we make sure the calculator did the right thing?
+        assertThat("actual", equalTo("expected"));
+    }
 }
