@@ -2,6 +2,7 @@ group 'com.visa.rpn'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'java'
+apply plugin: 'groovy'
 
 sourceCompatibility = 1.8
 
@@ -10,6 +11,8 @@ repositories {
 }
 
 dependencies {
+    testCompile group: 'org.jmockit', name: 'jmockit', version: '1.+'
+    testCompile group: 'commons-io', name: 'commons-io', version: '2.+'
     testCompile group: 'junit', name: 'junit', version: '4.+'
 }
 
@@ -21,4 +24,89 @@ jar {
                 "Main-Class": "com.dalelotts.rpn.Main"
         )
     }
+}
+
+task 'jenkins-install' {
+    ext.jenkinsDir = new File(projectDir, 'jenkins')
+    ext.jenkinsWar = new File(projectDir, 'jenkins/jenkins.war')
+    outputs.upToDateWhen { jenkinsWar.exists() }
+
+    doLast {
+        jenkinsDir.mkdir()
+        final jenkinsSource = 'http://ftp-nyc.osuosl.org/pub/jenkins/war/1.636/jenkins.war'
+        new URL(jenkinsSource).withInputStream { i -> jenkinsWar.withOutputStream { it << i } }
+    }
+}
+
+task 'jenkins-install-cli'(dependsOn: 'jenkins-running') {
+    ext.jenkinsDir = new File(projectDir, 'jenkins')
+    ext.jenkinsCLIJar = new File(projectDir, 'jenkins/jenkins-cli.jar')
+    outputs.file jenkinsCLIJar
+
+    doLast {
+
+        final jenkinsCLISource = 'http://localhost:8080/jnlpJars/jenkins-cli.jar'
+        jenkinsDir.mkdir()
+        new URL(jenkinsCLISource).withInputStream { i -> jenkinsCLIJar.withOutputStream { it << i } }
+    }
+}
+
+task 'jenkins-running' << {
+    def url = "http://localhost:8080".toURL()
+
+    try {
+        if ('' == url.text) {
+            throw new StopExecutionException('Jenkins is not running')
+        }
+    } catch (Throwable ignore) {
+        throw new StopExecutionException('Jenkins is not running - run "jenkins-cli start"')
+    }
+}
+
+task 'jenkins-configure-xml'(type: Copy) {
+    // Need this to always run so the configuration file is always current.
+    // ./jenkins-config.xml shouldn't be checked-in, but without it in place when this script
+    // loads, the jenkins-configure task fails with "file not found" exception.
+    // so it is checked in and this task will always overwrite it to make sure it is up-to-date.
+    outputs.upToDateWhen { false }
+    from(projectDir.absolutePath + "/jenkins") {
+        include '*.xml'
+        filter { it.replaceAll('@@projectDir@@', projectDir.absolutePath) }
+        rename '(.*).xml', 'jenkins-config.xml'
+    }
+    into projectDir
+}
+
+task 'jenkins-git-plugin'(type: Exec, dependsOn: 'jenkins-install-cli') {
+    //on linux
+    commandLine './jenkins-cli'
+
+    args 'install-plugin', 'git'
+}
+
+task 'jenkins-configure'(type: Exec, dependsOn: ['jenkins-git-plugin', 'jenkins-configure-xml']) {
+    ext.srcFile = new File(projectDir, "jenkins-config.xml")
+    inputs.file srcFile
+    //on linux
+    commandLine './jenkins-cli'
+
+    args 'create-job', 'rpn-calculator'
+
+    //store the output instead of printing to the console:
+    standardInput = new FileInputStream(srcFile)
+}
+
+task 'jenkins-git-enable'(type: Copy) {
+    ext.srcDir = new File(projectDir, "git")
+    ext.destDir = new File(projectDir, ".git/hooks")
+    inputs.dir srcDir
+    outputs.dir destDir
+    from (srcDir)  {
+        filter { it.replaceAll('@@projectDir@@', "file://" + projectDir.absolutePath) }
+    }
+    into destDir
+}
+
+task 'jenkins-git-disable'(type: Delete) {
+    delete new File(projectDir, ".git/hooks/post-receive")
 }
